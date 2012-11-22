@@ -39,30 +39,9 @@ namespace ShopifySampleApp
         /// session.  This will be null the first time a page is visited.</param>
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
-            // TODO: Create an appropriate data model for your problem domain to replace the sample data
-            ShopifyAuthorizationState authState = new ShopifyAuthorizationState
-            {
-                ShopName = "buckridge-hyatt6895",
-                AccessToken = "42d4917ed3507278c748046addb01f3d"
-            };
-
-            var api = new ShopifyAPIClient(authState, new JsonDataTranslator());
-
-            // The JSON Data Translator will automatically decode the JSON for you
-            var result = api.Get("/admin/products.json");
-            result.Completed = delegate(IAsyncOperation<dynamic> asyncAction, AsyncStatus asyncStatus)
-            {
-                var data = asyncAction.GetResults();
-                var products = data.products;
-
-                // TODO: should I convert products to match the sample data groups or start fresh?
-                
-                var sampleDataGroups = SampleDataSource.GetGroups((String)navigationParameter);
-                this.DefaultViewModel["Groups"] = sampleDataGroups;
-            };
-
-            //var sampleDataGroups = SampleDataSource.GetGroups((String)navigationParameter);
-            //this.DefaultViewModel["Groups"] = sampleDataGroups;
+            var groups = ProductDataSource.GetGroups((String)navigationParameter);
+            //var groups = SampleDataSource.GetGroups((String)navigationParameter);
+            this.DefaultViewModel["Groups"] = groups;
         }
 
         /// <summary>
@@ -77,7 +56,7 @@ namespace ShopifySampleApp
 
             // Navigate to the appropriate destination page, configuring the new page
             // by passing required information as a navigation parameter
-            this.Frame.Navigate(typeof(GroupDetailPage), ((SampleDataGroup)group).UniqueId);
+            this.Frame.Navigate(typeof(GroupDetailPage), ((ProductDataGroup)group).UniqueId);
         }
 
         /// <summary>
@@ -90,7 +69,7 @@ namespace ShopifySampleApp
         {
             // Navigate to the appropriate destination page, configuring the new page
             // by passing required information as a navigation parameter
-            var itemId = ((SampleDataItem)e.ClickedItem).UniqueId;
+            var itemId = ((ProductDataItem)e.ClickedItem).UniqueId;
             this.Frame.Navigate(typeof(ItemDetailPage), itemId);
         }
     }

@@ -12,7 +12,8 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-
+        <common:HtmlToStringConverter x:Key="HtmlToString"/>
+        
         <!--
             Collection of grouped items displayed by this page, bound to a subset
             of the complete item list because items in groups cannot be virtualized
@@ -51,7 +52,7 @@
             ItemClick="ItemView_ItemClick">
 
             <GridView.ItemsPanel>
-                <ItemsPanelTemplate>                        
+                <ItemsPanelTemplate>
                     <VirtualizingStackPanel Orientation="Horizontal"/>
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
@@ -65,7 +66,7 @@
                                     Click="Header_Click"
                                     Style="{StaticResource TextPrimaryButtonStyle}" >
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding title}" Margin="3,-7,10,10" Style="{StaticResource GroupHeaderTextStyle}" />
+                                        <TextBlock Text="{Binding Title}" Margin="3,-7,10,10" Style="{StaticResource GroupHeaderTextStyle}" />
                                         <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,-7,0,10" Style="{StaticResource GroupHeaderTextStyle}"/>
                                     </StackPanel>
                                 </Button>

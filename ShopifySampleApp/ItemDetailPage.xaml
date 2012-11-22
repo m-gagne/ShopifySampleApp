@@ -12,7 +12,8 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-
+        <common:HtmlToStringConverter x:Name="HtmlToString"/>
+        
         <!-- Collection of items displayed by this page -->
         <CollectionViewSource
             x:Name="itemsViewSource"
@@ -46,7 +47,7 @@
             AutomationProperties.Name="Item Details"
             TabIndex="1"
             Grid.RowSpan="2"
-            ItemsSource="{Binding Source={StaticResource itemsViewSource}}">
+            ItemsSource="{Binding Source={StaticResource itemsViewSource}}" SelectionChanged="flipView_SelectionChanged">
 
             <FlipView.ItemContainerStyle>
                 <Style TargetType="FlipViewItem">
@@ -79,7 +80,7 @@
                                         </InlineUIContainer>
                                     </Paragraph>
                                     <Paragraph>
-                                        <Run FontWeight="SemiLight" Text="{Binding Content}"/>
+                                        <Run FontWeight="SemiLight" Text="{Binding Content, Converter={StaticResource HtmlToString}}"/>
                                     </Paragraph>
                                 </RichTextBlock>
 
