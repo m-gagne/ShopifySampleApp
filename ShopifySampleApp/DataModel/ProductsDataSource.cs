@@ -263,8 +263,8 @@ namespace ShopifySampleApp.Data
             // This is just an example to show that it can be done, not how it *should* be done.
             ShopifyAuthorizationState authState = new ShopifyAuthorizationState
             {
-                ShopName = YOUR_SITE;
-                AccessToken = YOUR_ACCESS_TOKEN;
+                ShopName = "buckridge-hyatt6895",
+                AccessToken = "42d4917ed3507278c748046addb01f3d"
             };
 
             var api = new ShopifyAPIClient(authState, new JsonDataTranslator());
@@ -282,15 +282,16 @@ namespace ShopifySampleApp.Data
                     var group = new ProductDataGroup(product.id.ToString(),
                                         product.title.ToString(),
                                         product.vendor.ToString(),
-                                        "Assets/DarkGray.png",
+                                        product.images.Count > 0 ? product.images[0].src.ToString() : "",
                                         product.body_html.ToString());
-                    
+
+                    var imgCount = 0;
                     foreach (var variant in product.variants)
                     {
                         group.Items.Add(new ProductDataItem(variant.id.ToString(),
                                             variant.option1.ToString(),
                                             variant.option2.ToString(),
-                                            "Assets/LightGray.png",
+                                            imgCount < product.images.Count ? product.images[imgCount++].src.ToString() : "",
                                             "",
                                             group.Description,
                                             group));                            
